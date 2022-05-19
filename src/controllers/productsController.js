@@ -43,6 +43,7 @@ const controller = {
 	
 	// Create -  Method to store
 	store: (req, res) => {
+		
 		let products = readProducts()
 
 		const {name,price,discount,description, category} = req.body
@@ -53,7 +54,7 @@ const controller = {
 			description : description.trim(),
 			price : +price,
 			discount : +discount,
-			image: "default-image.png",
+			image: req.file ? req.file.filename : "default-image.png",
 			category,
 			toThousand
 		}
@@ -80,6 +81,8 @@ const controller = {
 		let products = readProducts()
 		const {name,price,discount,description,category} = req.body
 
+		const product = products.find(product => product.id === +req.params.id)
+
 		const productsModify = products.map(product => {
 			if (product.id === +req.params.id) {
 				let productModify = {
@@ -88,12 +91,21 @@ const controller = {
 					price : +price,
 					discount: +discount,
 					description : description.trim(),
-					category 
+					image : req.file ? req.file.filename : product.image,
+					category
+				
 				}	
 				return 	productModify		
 			}
 			return product
 		})
+
+		if(req.file && product.image !== "default-image.png"){
+			if(fs.existsSync("./public/images/products/" + product.image)){ // Existe el archivo??
+				fs.unlinkSync("./public/images/products/" + product.image) //BORRALO
+			} 
+			
+		}
 
 		saveProducts(productsModify)
 
@@ -105,6 +117,7 @@ const controller = {
 		let products = readProducts()
 		const productsModify = products.filter(product => product.id !== +req.params.id)
 
+		
 		saveProducts(productsModify)
 
 		return res.redirect("/products")

@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<div class="col-12">
-			<form action="/products/update/<%= product.id %>?_method=PUT" method="POST">
+			<form action="/products/update/<%= product.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
 				<div class="row product-detail">
 					<div class="col-12 col-md-6">
 						<label for="name" class="form-label">Nombre del producto:</label>
@@ -36,9 +36,20 @@
 							<option value="visited" <%= product.category === "visited" && "selected" %> >Últimos agregados</option>
 						</select>
 					</div>
-					<div class="col-12">
-						<label for="description" class="form-label">Descipción:</label>
+					<div class="col-12 col-md-6">						
+						<label for="description" class="form-label">Descripción:</label>
 						<textarea name="description" id="description" class="form-input"><%= product.description %></textarea>
+					</div>
+					<div class="col-12 col-md-6">
+						<div class="row">
+							<div class="col-6">
+								<img src="/images/products/<%= product.image %>" alt="">
+							</div>
+							<div class="col-6">
+								<label for="image" class="form-label">Descuento:</label>
+								<input type="file" id="image" name="image" class="form-imput" accept="image/*">
+							</div>
+						</div>				
 					</div>
 					<div class="col-12">
 						<button type="submit" class="buy-now-button">Guardar producto</button>
