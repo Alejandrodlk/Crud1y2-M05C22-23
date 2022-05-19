@@ -41,8 +41,16 @@
 						<textarea name="description" id="description" class="form-input" style="resize: none"></textarea>
 					</div>
 					<div class="col-12 col-md-6">
-						<label for="image" class="form-label">Descuento:</label>
-						<input type="file" id="image" name="image" class="form-imput" accept="image/*">
+						<div class="row">
+							<div class="col-6">
+								<img src="" id="imgPreview" alt="">
+							</div>
+							<div class="col-6">
+								<label for="image" class="form-input">Agregar imagen::</label>
+								<input type="file" id="image" name="image" class="form-imput" accept="image/*" hidden>
+							</div>
+						</div>
+						
 					</div>
 					<div class="col-12">
 						<button type="submit" class="buy-now-button">Guardar producto</button>
@@ -57,5 +65,14 @@
 	<!-- footer -->
 	<%- include('partials/footer') %>
 	<!-- /footer -->
+	<script>
+		document.getElementById("image").addEventListener("change" , (e) => {
+			let reader = new FileReader()
+			reader.readAsDataURL(e.target.files[0])
+			reader.onload = () => {
+				document.getElementById("imgPreview").src = reader.result
+			}
+		})
+	</script>
 </body>	
 </html>
