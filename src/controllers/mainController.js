@@ -22,6 +22,7 @@ const controller = {
 		const {keywords} = req.query
 		let result = products.filter(product => product.name.toLowerCase().includes(keywords.toLowerCase()) || product.description.toLowerCase().includes(keywords.toLowerCase()))
 	
+		/* return res.send(result) */
 		return res.render("results" , {
 			result,
 			keywords,

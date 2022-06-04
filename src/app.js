@@ -5,6 +5,10 @@ const express = require('express');
 const logger = require('morgan');
 const path = require('path');
 const methodOverride =  require('method-override'); // Pasar poder usar los métodos PUT y DELETE
+const session = require('express-session')
+const localsCheck = require('./middlewares/localsCheck')
+const cookiesCheck = require('./middlewares/cookiesCheck')
+
 
 // ************ express() - (don't touch) ************
 const app = express();
@@ -16,6 +20,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(cookieParser());
 app.use(methodOverride('_method')); // Pasar poder pisar el method="POST" en el formulario por PUT y DELETE
+app.use(session({
+  secret : 'MercadoLiebre for ever!',
+  resave : false,
+  saveUninitialized : true
+}))
+
+app.use(cookiesCheck)
+app.use(localsCheck)
+
 
 // ************ Template Engine - (don't touch) ************
 app.set('view engine', 'ejs');
@@ -27,9 +40,11 @@ app.set('views', path.join(__dirname, '/views')); // Define la ubicación de la 
 // ************ Route System require and use() ************
 const mainRouter = require('./routes/main'); // Rutas main
 const productsRouter = require('./routes/products'); // Rutas /products
+const usersRouter = require('./routes/users')
 
 app.use('/', mainRouter);
 app.use('/products', productsRouter);
+app.use('/users' , usersRouter)
 
 
 
