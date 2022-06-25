@@ -16,6 +16,7 @@ module.exports = {
         if (errors.isEmpty()) {
             let {name,surname,email,pass} = req.body
             let lastId = users.length !== 0 ? users[users.length -1].id : 0
+           
             //guardar los datos
             let user = {
                 id : lastId + 1,
