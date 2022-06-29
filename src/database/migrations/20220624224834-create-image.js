@@ -13,10 +13,10 @@ module.exports = {
       },
       primary: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false //false: se interpreta como '0'
+        allowNull : false,
+        defaultValue : false
       },
-      productId: {
+      productId : {
         type: Sequelize.INTEGER,
         references : {
           model : {
@@ -30,11 +30,11 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       },
       deletedAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       }
     });
